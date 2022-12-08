@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Str; @endphp
-<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: true}">
+<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: false}">
     <div class="w-full hidden md:flex px-8 py-2 justify-between items-center font-inter">
         <a href="{{ route('products.index') }}" class="h-[60px] block"><img src="{{ asset('img/logo.png') }}"
                                                                             class="h-full" alt=""></a>
@@ -8,10 +8,13 @@
             <div class="font-bold relative text-xl hover:cursor-pointer" x-on:click="cart = !cart"
                  :class="cart ? 'text-stone-600' : ''">
                 <i class="fas fa-cart-shopping transition-colors"></i>
-                <div
-                    class="rounded-full bg-primary text-white flex items-center justify-center text-xs w-4 aspect-square absolute -top-1 -right-2">
-                    {{ session('cart', [])->count() }}
-                </div>
+
+                @if (session('cart', [])->count() > 0)
+                    <div
+                        class="rounded-full bg-primary text-white flex items-center justify-center text-xs w-4 aspect-square absolute -top-1 -right-2">
+                        {{ session('cart', [])->count() }}
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -27,56 +30,15 @@
             </div>
         </div>
 
-        <div x-show="cart" x-transition.opacity class="shadow-3xl rounded-xl bg-white flex flex-col gap-4 text-lg p-4">
+        <div x-show="show" x-transition.opacity class="shadow-3xl rounded-xl bg-white flex flex-col gap-4 text-lg p-4">
             <a href="{{ route('products.index') }}" class="font-bold">Produits</a>
         </div>
     </div>
 
     {{-- CART DISPLAY --}}
-    <div x-show="cart"
-         x-on:click.away="cart = false"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="translate-x-full"
-         x-transition:enter-end="translate-0"
-         x-transition:leave="transition ease-in duration-300"
-         x-transition:leave-start="translate-0"
-         x-transition:leave-end="translate-x-full"
-         class="absolute top-full right-0 w-full max-w-[450px] bg-stone-200 h-screen z-20">
+    @include('partials.cart')
 
-        <div class="p-8">
-            <x-title-h2><i class="fas fa-cart-shopping mr-2"></i> Panier</x-title-h2>
-
-            <div class="w-full grid grid-cols-1 gap-8">
-                @foreach (session('cart', []) as $product)
-                    <div class="flex gap-4 items relative group">
-                        <div class="aspect-square max-w-[100px]">
-                            <img
-                                class="object-cover object-center rounded w-full h-full"
-                                src="https://picsum.photos/seed/{{ rand(1, 1000) }}/800"
-                                alt="{{ Str::slug($product->name) }}">
-                        </div>
-
-                        <div class="w-full">
-                            <h3 class="text-lg font-bold">{{ $product->name }}</h3>
-                            <p class="mb-2">@money($product->price)</p>
-                            <p>Quantité : <b>{{ $product->quantity }}</b></p>
-                        </div>
-
-                        <form action="{{ route('products.remove_from_cart') }}" method="POST"
-                              class="absolute top-0 right-0 text-sm hidden group-hover:block">
-                            @csrf
-                            @method('DELETE')
-                            <input type="hidden" name="id" value="{{ $product->id }}">
-                            <button type="submit">
-                                <i class="fas fa-trash hover:text-primary hover:cursor-pointer"></i>
-                            </button>
-                        </form>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </div>
-
+    {{-- Background dark overlay when cart is open --}}
     <div x-show="cart"
          x-transition:enter="transition-opacity ease-out duration-300"
          x-transition:enter-start="opacity-0"

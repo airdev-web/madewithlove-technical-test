@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AddProductToCartRequest;
 use App\Http\Requests\RemoveProductFromCartRequest;
+use App\Http\Requests\UpdateQuantityFromCartRequest;
 use App\Models\Product;
 
 class CartController extends Controller
@@ -31,7 +32,7 @@ class CartController extends Controller
         // Store in session the updated cart
         session(['cart' => $session_cart]);
 
-        return redirect(route('products.index'));
+        return redirect()->back();
     }
 
     public function remove_product(RemoveProductFromCartRequest $request)
@@ -41,6 +42,17 @@ class CartController extends Controller
         // Update the session of the filtered cart without the removed product
         session(['cart' => $session_cart->filter(fn($product) => $product->id != $request->id)]);
 
-        return redirect(route('products.index'));
+        return redirect()->back();
+    }
+
+    public function update_quantity(UpdateQuantityFromCartRequest $request)
+    {
+        $session_cart = session('cart', collect());
+
+        // Update the session with the updated quantity
+        $session_cart->where('id', $request->id)->first()->quantity = $request->quantity;
+        session(['cart' => $session_cart]);
+
+        return redirect()->back();
     }
 }
