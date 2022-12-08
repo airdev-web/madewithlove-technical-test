@@ -31,7 +31,11 @@ module.exports = {
             // => @media (min-width: 1536px) { ... }
         },
 
-        extend: {},
+        extend: {
+            colors: {
+                'primary': '#D93C35'
+            }
+        },
     },
     plugins: [],
 }

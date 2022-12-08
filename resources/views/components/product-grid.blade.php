@@ -1,8 +1,10 @@
+@php use Illuminate\Support\Str; @endphp
 <div class="rounded pb-4 bg-stone-100 group">
     <div class="max-h-[300px] overflow-hidden border mb-2">
         <img
             class="object-cover object-center rounded-t w-full h-full group-hover:scale-110 transition-transform duration-700"
-            src="https://picsum.photos/seed/{{ rand(1, 1000) }}/800" alt="">
+            src="https://picsum.photos/seed/{{ rand(1, 1000) }}/800"
+            alt="{{ Str::slug($product->name) }}">
     </div>
 
     <div class="px-4">
@@ -11,10 +13,13 @@
 
         <div class="flex justify-between items-center">
             <p class="text-xs italic">Ajouter au panier</p>
-            <form action="#" method="POST" class="flex border w-fit">
-                <input name="quantity" id="quantity" type="number" value="1"
+            <form action="{{ route('products.add_to_cart') }}" method="POST" class="flex border w-fit">
+                @csrf
+                <input type="hidden" name="id" id="name" value="{{ $product->id }}">
+                <input name="quantity" id="quantity" type="number" value="1" min="1"
                        class="max-w-[50px] p-2 font-bold text-center outline-none"/>
-                <button class="py-2 px-4 hover:bg-stone-200"><i class="fas fa-cart-plus text-xl"></i></button>
+                <button class="py-2 px-4 hover:bg-stone-200"><i class="fas fa-cart-plus text-xl text-primary"></i>
+                </button>
             </form>
         </div>
     </div>
