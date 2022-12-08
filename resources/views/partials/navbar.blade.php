@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Str; @endphp
-<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: false}">
+<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: true}">
     <div class="w-full hidden md:flex px-8 py-2 justify-between items-center font-inter">
         <a href="{{ route('products.index') }}" class="h-[60px] block"><img src="{{ asset('img/logo.png') }}"
                                                                             class="h-full" alt=""></a>
@@ -48,10 +48,10 @@
 
             <div class="w-full grid grid-cols-1 gap-8">
                 @foreach (session('cart', []) as $product)
-                    <div class="flex gap-4 items">
+                    <div class="flex gap-4 items relative group">
                         <div class="aspect-square max-w-[100px]">
                             <img
-                                class="object-cover object-center rounded w-full h-full group-hover:scale-110 transition-transform duration-700"
+                                class="object-cover object-center rounded w-full h-full"
                                 src="https://picsum.photos/seed/{{ rand(1, 1000) }}/800"
                                 alt="{{ Str::slug($product->name) }}">
                         </div>
@@ -61,6 +61,16 @@
                             <p class="mb-2">@money($product->price)</p>
                             <p>Quantité : <b>{{ $product->quantity }}</b></p>
                         </div>
+
+                        <form action="{{ route('products.remove_from_cart') }}" method="POST"
+                              class="absolute top-0 right-0 text-sm hidden group-hover:block">
+                            @csrf
+                            @method('DELETE')
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            <button type="submit">
+                                <i class="fas fa-trash hover:text-primary hover:cursor-pointer"></i>
+                            </button>
+                        </form>
                     </div>
                 @endforeach
             </div>
