@@ -1,5 +1,5 @@
 @php use Illuminate\Support\Str; @endphp
-<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: true}">
+<div class="w-full z-50 bg-stone-100 relative shadow" x-data="{show: false, cart: false}">
     <div class="w-full hidden md:flex px-8 py-2 justify-between items-center font-inter">
         <a href="{{ route('products.index') }}" class="h-[60px] block"><img src="{{ asset('img/logo.png') }}"
                                                                             class="h-full" alt=""></a>
@@ -41,15 +41,15 @@
          x-transition:leave="transition ease-in duration-300"
          x-transition:leave-start="translate-0"
          x-transition:leave-end="translate-x-full"
-         class="absolute top-full right-0 w-full max-w-[400px] bg-stone-200 h-screen">
+         class="absolute top-full right-0 w-full max-w-[450px] bg-stone-200 h-screen z-20">
 
         <div class="p-8">
             <x-title-h2><i class="fas fa-cart-shopping mr-2"></i> Panier</x-title-h2>
 
             <div class="w-full grid grid-cols-1 gap-8">
                 @foreach (session('cart', []) as $product)
-                    <div class="flex gap-4">
-                        <div class="aspect-square max-w-[80px]">
+                    <div class="flex gap-4 items">
+                        <div class="aspect-square max-w-[100px]">
                             <img
                                 class="object-cover object-center rounded w-full h-full group-hover:scale-110 transition-transform duration-700"
                                 src="https://picsum.photos/seed/{{ rand(1, 1000) }}/800"
@@ -65,6 +65,14 @@
                 @endforeach
             </div>
         </div>
-
     </div>
+
+    <div x-show="cart"
+         x-transition:enter="transition-opacity ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition-opacity ease-in duration-300"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="absolute top-full w-full bg-stone-800 h-screen z-10" style="background-color: rgba(41,37,36,0.6)"></div>
 </div>
