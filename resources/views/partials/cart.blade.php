@@ -6,7 +6,7 @@
      x-transition:leave="transition ease-in duration-300"
      x-transition:leave-start="translate-0"
      x-transition:leave-end="translate-x-full"
-     class="absolute top-full right-0 w-full max-w-[450px] bg-stone-200 h-screen z-20">
+     class="fixed top-[75px] right-0 w-full md:max-w-[450px] bg-stone-200 h-screen z-20">
 
     <div class="p-8">
         <x-title-h2><i class="fas fa-cart-shopping mr-2"></i> Panier</x-title-h2>

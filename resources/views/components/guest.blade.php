@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css"/>
 
 </head>
-<body class="antialiased relative font-body">
+<body class="antialiased relative font-body pt-[75px]">
 
 @include('partials.navbar')
 
