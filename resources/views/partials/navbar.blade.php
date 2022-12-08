@@ -1,7 +1,7 @@
 @php use Illuminate\Support\Str; @endphp
 <div class="fixed top-0 w-full z-50 h-[75px] bg-stone-100 shadow" x-data="{show: false, cart: false}">
     <div class="w-full hidden md:flex px-8 py-2 justify-between items-center font-inter">
-        <a href="{{ route('products.index') }}" class="h-[60px] block"><img src="{{ asset('img/logo.png') }}"
+        <a href="{{ route('home') }}" class="h-[60px] block"><img src="{{ asset('img/logo.png') }}"
                                                                             class="h-full" alt=""></a>
         <div class="flex items-center space-x-8 text-lg">
             <a href="{{ route('products.index') }}" class="font-bold">Produits</a>
@@ -11,7 +11,7 @@
 
     <div class="md:hidden py-2 flex flex-col font-inter">
         <div class="flex justify-between items-center gap-8 px-4">
-            <a href="{{ route('products.index') }}" class="h-full w-auto block"><img src="{{ asset('img/logo.png') }}"
+            <a href="{{ route('home') }}" class="h-full w-auto block"><img src="{{ asset('img/logo.png') }}"
                                                                                 class="h-full max-h-[60px]" alt=""></a>
 
             <div class="flex items-center gap-4">
