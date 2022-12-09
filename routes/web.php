@@ -21,3 +21,5 @@ Route::post('/add_to_cart', [CartController::class, 'add_product'])->name('cart.
 Route::delete('/remove_from_cart', [CartController::class, 'remove_product'])->name('cart.remove_product');
 Route::patch('/update_quantity', [CartController::class, 'update_quantity'])->name('cart.update_quantity');
 Route::get('/order', [CartController::class, 'order'])->name('cart.order');
+
+Route::get('/admin/products/removed', [ProductsController::class, 'removed_products'])->name('admin.products.removed');

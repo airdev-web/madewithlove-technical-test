@@ -5,6 +5,7 @@
                                                                             class="h-full" alt=""></a>
         <div class="flex items-center space-x-8 text-lg">
             <a href="{{ route('products.index') }}" class="font-bold">Produits</a>
+            <a href="{{ route('admin.products.removed') }}" class="font-bold">Produits supprimés</a>
             <x-cart-menu-button></x-cart-menu-button>
         </div>
     </div>
@@ -26,6 +27,7 @@
 
         <div x-show="show" x-transition.opacity class="shadow-3xl bg-white flex flex-col gap-4 text-lg py-4 px-8 bg-stone-100 border-t">
             <a href="{{ route('products.index') }}" class="font-bold">Produits</a>
+            <a href="{{ route('admin.products.removed') }}" class="font-bold">Produits supprimés</a>
         </div>
     </div>
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderProduct;
 use App\Models\Product;
-use Illuminate\Http\Request;
 
 class ProductsController extends Controller
 {
@@ -12,33 +12,14 @@ class ProductsController extends Controller
         return view('products.index', ['products' => Product::all()]);
     }
 
-    public function create()
+    public function removed_products()
     {
-        //
-    }
+        $removed_product_ids = OrderProduct::where('removed', true)->groupBy('product_id')->get('product_id')->pluck('product_id');
 
-    public function store(Request $request)
-    {
-        //
-    }
+        $products = Product::with(['order_products' => function($query) {
+            $query->where('removed', true);
+        }, 'order_products.order'])->whereIn('id', $removed_product_ids)->get();
 
-    public function show(Product $product)
-    {
-        //
-    }
-
-    public function edit(Product $product)
-    {
-        //
-    }
-
-    public function update(Request $request, Product $product)
-    {
-        //
-    }
-
-    public function destroy(Product $product)
-    {
-        //
+        return view('admin.products.removed', ['products' => $products]);
     }
 }
