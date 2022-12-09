@@ -11,7 +11,7 @@
     <div class="p-8">
         <x-title-h2><i class="fas fa-cart-shopping mr-2"></i> Panier</x-title-h2>
 
-        @if(session('cart', collect())->count() > 0)
+        @if(session('cart', collect())->where('removed', '!=', 'true')->count() > 0)
             <a href="{{ route('cart.order') }}" class="flex items-center justify-center gap-2 w-full px-4 py-2 bg-primary text-white mb-8 text-center font-bold text-lg">
                 Payer la commande <i class="fas fa-credit-card"></i>
             </a>
