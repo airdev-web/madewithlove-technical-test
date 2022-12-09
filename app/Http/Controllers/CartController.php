@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AddProductToCartRequest;
 use App\Http\Requests\RemoveProductFromCartRequest;
 use App\Http\Requests\UpdateQuantityFromCartRequest;
+use App\Models\Order;
+use App\Models\OrderProduct;
 use App\Models\Product;
 
 class CartController extends Controller
@@ -54,5 +56,32 @@ class CartController extends Controller
         session(['cart' => $session_cart]);
 
         return redirect()->back();
+    }
+
+    public function order()
+    {
+        $session_cart = session('cart', collect());
+
+        // Create the order
+        $order = new Order();
+        $order->save();
+
+        // Convert the session to array attribute with only what's needed
+        $session_cart = $session_cart->map(fn($product) => [
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => $product->quantity,
+            'removed' => false,
+            'product_id' => $product->id,
+            'order_id' => $order->id
+        ]);
+
+        // Bulk insert for performance of all the products
+        OrderProduct::insert($session_cart->toArray());
+
+        // The order is saved, reset the session cart
+        session()->forget('cart');
+
+        return redirect(route('home'));
     }
 }

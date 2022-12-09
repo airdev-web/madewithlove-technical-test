@@ -11,7 +11,7 @@
         <p class="mb-4">@money($product->price) / pièce</p>
 
         {{-- Update Quantity --}}
-        <form action="{{ route('products.update_quantity') }}" method="POST" class="flex items-center gap-2"
+        <form action="{{ route('cart.update_quantity') }}" method="POST" class="flex items-center gap-2"
               x-data="{base_quantity: {{ $product->quantity }}, quantity: {{ $product->quantity }} }">
             @csrf
             @method('PATCH')
@@ -26,7 +26,7 @@
     </div>
 
     {{-- Remove Product From Cart --}}
-    <form action="{{ route('products.remove_from_cart') }}" method="POST"
+    <form action="{{ route('cart.remove_product') }}" method="POST"
           class="absolute top-0 right-0 text-sm hidden group-hover:block">
         @csrf
         @method('DELETE')

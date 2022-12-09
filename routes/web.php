@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => redirect(route('products.index')))->name('home');
 Route::get('/products', [ProductsController::class, 'index'])->name('products.index');
-Route::post('/add_to_cart', [CartController::class, 'add_product'])->name('products.add_to_cart');
-Route::delete('/remove_from_cart', [CartController::class, 'remove_product'])->name('products.remove_from_cart');
-Route::patch('/update_quantity', [CartController::class, 'update_quantity'])->name('products.update_quantity');
+Route::post('/add_to_cart', [CartController::class, 'add_product'])->name('cart.add_product');
+Route::delete('/remove_from_cart', [CartController::class, 'remove_product'])->name('cart.remove_product');
+Route::patch('/update_quantity', [CartController::class, 'update_quantity'])->name('cart.update_quantity');
+Route::get('/order', [CartController::class, 'order'])->name('cart.order');

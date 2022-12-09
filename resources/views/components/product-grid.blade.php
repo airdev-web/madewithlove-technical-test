@@ -13,7 +13,7 @@
 
         <div class="flex justify-between items-center">
             <p class="text-xs italic">Ajouter au panier</p>
-            <form action="{{ route('products.add_to_cart') }}" method="POST" class="flex border w-fit">
+            <form action="{{ route('cart.add_product') }}" method="POST" class="flex border w-fit">
                 @csrf
                 <input type="hidden" name="id" id="name" value="{{ $product->id }}">
                 <input name="quantity" id="quantity" type="number" value="1" min="1"
