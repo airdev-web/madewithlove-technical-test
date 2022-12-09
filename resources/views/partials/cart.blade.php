@@ -12,7 +12,7 @@
         <x-title-h2><i class="fas fa-cart-shopping mr-2"></i> Panier</x-title-h2>
 
         <div class="w-full grid grid-cols-1 gap-8">
-            @forelse (session('cart', []) as $product)
+            @forelse (session('cart', collect()) as $product)
                 <x-product-cart :product="$product"></x-product-cart>
             @empty
                 <p class="text-center">
