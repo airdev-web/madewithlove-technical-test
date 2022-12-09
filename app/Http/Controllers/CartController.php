@@ -26,8 +26,17 @@ class CartController extends Controller
 
         // Test if product is already in cart, then update the quantity, else, create it in the cart session
         $product_already_in_cart = $session_cart->where('id', $product->id)->first();
-        if ($product_already_in_cart)
-            $product_already_in_cart->quantity += $product->quantity;
+        if ($product_already_in_cart) {
+
+            // If product was already in cart but removed, we just set the quantity to the desired and set the product has not removed
+            if ($product_already_in_cart->removed) {
+                $product_already_in_cart->quantity = $product->quantity;
+                $product_already_in_cart->removed = false;
+            } else {
+                // Else, we just increment the quantity
+                $product_already_in_cart->quantity += $product->quantity;
+            }
+        }
         else
             $session_cart->push($product);
 
@@ -72,7 +81,7 @@ class CartController extends Controller
             'name' => $product->name,
             'price' => $product->price,
             'quantity' => $product->quantity,
-            'removed' => false,
+            'removed' => $product->removed ?: false,
             'product_id' => $product->id,
             'order_id' => $order->id
         ]);
