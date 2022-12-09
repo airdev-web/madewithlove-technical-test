@@ -19,7 +19,7 @@
 
         <div class="w-full grid grid-cols-1 gap-8">
 
-            @forelse (session('cart', collect()) as $product)
+            @forelse (session('cart', collect())->where('removed', '!=', true) as $product)
                 <x-product-cart :product="$product"></x-product-cart>
             @empty
                 <p class="text-center">

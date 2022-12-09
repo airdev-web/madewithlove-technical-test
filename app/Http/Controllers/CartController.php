@@ -41,8 +41,9 @@ class CartController extends Controller
     {
         $session_cart = session('cart', collect());
 
-        // Update the session of the filtered cart without the removed product
-        session(['cart' => $session_cart->filter(fn($product) => $product->id != $request->id)]);
+        // Set attribute the product has been removed from cart
+        $session_cart->where('id', $request->id)->first()->removed = true;
+        session(['cart' => $session_cart]);
 
         return redirect()->back();
     }
